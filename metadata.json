@@ -1,0 +1,6 @@
+{
+  "name": "Atelier Luis Tamani",
+  "description": "Landing page oficial de Luis Tamani Visionary Art para anunciar la renovación digital, captar suscripciones al boletín del taller, exhibir obras selectas y canalizar consultas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

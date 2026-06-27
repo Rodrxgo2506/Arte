@@ -301,7 +301,7 @@ export default function Hero() {
   return (
     <header
       id="hero-section"
-      className="relative min-h-screen w-full flex flex-col justify-center items-center px-4 sm:px-6 md:px-12 bg-slate-950 overflow-hidden pt-20 select-none"
+      className="relative min-h-screen w-full flex flex-col justify-end items-center px-4 sm:px-6 md:px-12 bg-slate-950 overflow-hidden pt-24 pb-3 md:pb-4 select-none"
     >
       {/* Layer 0: Fallback Mystic Shamanic Background */}
       <div className="absolute inset-0 bg-slate-950 overflow-hidden z-0 pointer-events-none">
@@ -369,216 +369,248 @@ export default function Hero() {
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg" />
       </audio>
 
-      {/* Layer 2: Perfect Dark Overlay to guarantee crisp text readability */}
-      <div className="absolute inset-0 bg-slate-950/65 z-20 pointer-events-none" />
+      {/* Layer 2: Subtle side gradients coming from left and right to keep the center of the video 100% clear and vibrant, with readable margins */}
+      <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-transparent to-slate-950/90 z-20 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent z-20 pointer-events-none" />
 
-      {/* Layer 3: Central Content Interface (Perfectly Centered vertically and horizontally) */}
-      <div className="relative z-30 max-w-3xl w-full mx-auto text-center flex flex-col items-center justify-center px-4">
+      {/* Layer 3: Split-Screen Content Interface (Left & Right margins are populated while the center is left entirely open for the majestic art video) */}
+      <div className="relative z-30 max-w-7xl w-full mx-auto flex flex-col justify-between items-center px-6 md:px-12 lg:px-16 min-h-[90vh] pt-28 pb-2">
 
-        {/* Borderless and frame-free central content container */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.1 }}
-          className="w-full max-w-2xl px-4 py-2 relative"
-          id="hero-slideshow-card"
-        >
-          {/* Sliding Content Window with beautiful transition and loading bar indicator */}
-          <div className="min-h-[220px] md:min-h-[190px] flex flex-col justify-center">
-            <AnimatePresence mode="wait">
-              {isTransitioning ? (
-                <motion.div
-                  key="loading-state"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="w-full flex flex-col items-center justify-center space-y-4 py-8"
-                >
-                  <Loader2 size={32} className="animate-spin text-indigo-400" />
-                  <div className="flex flex-col items-center space-y-2">
-                    <span className="text-[10px] font-mono tracking-[0.2em] text-indigo-300 uppercase animate-pulse">
-                      {activeSlide === 0
-                        ? "Mise à jour..."
-                        : activeSlide === 1
-                          ? "Updating..."
-                          : "Cargando..."}
+        {/* Main Content Grid: Left Text Column and Right Interactive Column */}
+        <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16 items-end my-auto pb-6">
+
+          {/* Left Column: Visionary Artist bio and descriptions */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.2, delay: 0.1 }}
+            className="col-span-1 md:col-span-5 text-left flex flex-col justify-end"
+            id="hero-left-column"
+          >
+            <div className="min-h-[220px] md:min-h-[190px] flex flex-col justify-center text-left items-start w-full">
+              <AnimatePresence mode="wait">
+                {isTransitioning ? (
+                  <motion.div
+                    key="loading-state-left"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="w-full flex flex-col items-start justify-center space-y-4 py-8 text-left"
+                  >
+                    <Loader2 size={32} className="animate-spin text-indigo-400" />
+                    <div className="flex flex-col items-start space-y-2">
+                      <span className="text-[10px] font-mono tracking-[0.2em] text-indigo-300 uppercase animate-pulse text-left">
+                        {activeSlide === 0
+                          ? "Mise à jour..."
+                          : activeSlide === 1
+                            ? "Updating..."
+                            : "Cargando..."}
+                      </span>
+                      <div className="w-28 h-[2px] bg-white/10 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-indigo-500 transition-all duration-75"
+                          style={{ width: `${transitionProgress}%` }}
+                        />
+                      </div>
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key={activeSlide}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -12 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    className="w-full flex flex-col space-y-4 text-left items-start"
+                  >
+                    {/* Tagline showing slide details */}
+                    <span className="text-[10px] font-mono tracking-[0.25em] text-indigo-300 uppercase block text-left">
+                      {activeLangData.tagline}
                     </span>
-                    <div className="w-28 h-[2px] bg-white/10 rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-indigo-500 transition-all duration-75"
-                        style={{ width: `${transitionProgress}%` }}
+
+                    {/* Title */}
+                    <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-white tracking-[0.1em] uppercase text-left">
+                      {activeLangData.title}
+                    </h1>
+
+                    {/* Elegant dynamic descriptions */}
+                    <p className="font-serif font-light text-sm md:text-base text-slate-100 leading-relaxed max-w-xl text-left">
+                      {activeLangData.text}
+                    </p>
+                    <p className="font-sans font-light text-xs text-indigo-200/80 max-w-xl leading-relaxed text-left">
+                      {activeLangData.subText}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+
+          {/* Center Space: Completely clear to let the majestic center of the video show! */}
+          <div className="hidden md:block md:col-span-2" />
+
+          {/* Right Column: Integrated Interactive Newsletter Form and Social & Contact details */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.2, delay: 0.1 }}
+            className="col-span-1 md:col-span-5 text-left flex flex-col justify-end"
+            id="hero-right-column"
+          >
+            {/* Integrated Interactive Newsletter Form */}
+            <div className="max-w-xl w-full text-left flex flex-col items-start" id="integrated-newsletter-form">
+              <AnimatePresence mode="wait">
+                {status === 'success' ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="flex flex-col items-start space-y-3 py-4 text-emerald-400 font-mono text-xs tracking-wider text-left"
+                  >
+                    <CheckCircle size={32} className="animate-bounce" />
+                    <span>{activeLangData.successMessage}</span>
+                  </motion.div>
+                ) : (
+                  <motion.form
+                    onSubmit={handleSubscriptionSubmit}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="flex flex-col sm:flex-row gap-2.5 w-full justify-start items-stretch"
+                  >
+                    <div className="relative flex-1">
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                          if (status === 'error') setStatus('idle');
+                        }}
+                        placeholder={activeLangData.placeholder}
+                        className="w-full bg-white/5 border border-white/15 px-5 py-3.5 text-base sm:text-sm text-white placeholder-white/30 focus:outline-none focus:border-white/40 focus:bg-white/10 transition-all rounded-none font-mono"
+                        disabled={status === 'loading'}
+                        required
                       />
+                      <Mail size={15} className="absolute right-5 top-1/2 -translate-y-1/2 text-white/20" />
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="px-8 py-3.5 bg-white text-slate-950 hover:bg-slate-100 text-[12px] font-mono font-bold tracking-[0.2em] transition-all rounded-none uppercase flex items-center justify-center space-x-2 shrink-0 disabled:opacity-55 active:scale-[0.98]"
+                      disabled={status === 'loading'}
+                    >
+                      {status === 'loading' ? (
+                        <Loader2 size={13} className="animate-spin text-slate-950" />
+                      ) : (
+                        <span>{activeLangData.buttonText}</span>
+                      )}
+                    </button>
+                  </motion.form>
+                )}
+              </AnimatePresence>
+
+              {/* Error Message */}
+              <AnimatePresence>
+                {status === 'error' && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="text-[10px] text-red-400 font-mono text-left mt-3 tracking-wide"
+                  >
+                    {errorMessage || activeLangData.errorMessage}
+                  </motion.p>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Social and Contact details */}
+            <AnimatePresence mode="wait">
+              {!isTransitioning && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                  className="mt-8 pt-6 border-t border-white/5 text-left flex flex-col items-start justify-start space-y-4 w-full"
+                >
+                  <div className="space-y-2 text-left w-full">
+                    <p className="text-[11px] font-mono tracking-[0.15em] text-slate-400 uppercase leading-relaxed max-w-lg text-left">
+                      {activeLangData.socialPrompt}
+                    </p>
+                    <div className="flex flex-col sm:flex-row items-start justify-start gap-2 sm:gap-6 pt-1">
+                      <a
+                        href="https://www.instagram.com/luistamani.visionart"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center space-x-1.5 text-xs font-mono text-white/75 hover:text-white transition-colors duration-300"
+                      >
+                        <span className="text-indigo-400 text-[10px]">Instagram:</span>
+                        <span className="underline decoration-indigo-500/20 group-hover:decoration-indigo-400 transition-colors">{activeLangData.instagram}</span>
+                      </a>
+                      <a
+                        href="https://www.facebook.com/LuisTamani"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center space-x-1.5 text-xs font-mono text-white/75 hover:text-white transition-colors duration-300"
+                      >
+                        <span className="text-indigo-400 text-[10px]">Facebook:</span>
+                        <span className="underline decoration-indigo-500/20 group-hover:decoration-indigo-400 transition-colors">{activeLangData.facebook}</span>
+                      </a>
                     </div>
                   </div>
-                </motion.div>
-              ) : (
-                <motion.div
-                  key={activeSlide}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                  className="w-full flex flex-col space-y-4"
-                >
-                  {/* Tagline showing slide details */}
-                  <span className="text-[10px] font-mono tracking-[0.25em] text-indigo-300 uppercase block">
-                    {activeLangData.tagline}
-                  </span>
 
-                  {/* Title */}
-                  <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-white tracking-[0.1em] uppercase">
-                    {activeLangData.title}
-                  </h1>
-
-                  {/* Elegant dynamic descriptions */}
-                  <p className="font-serif font-light text-sm md:text-base text-slate-100 leading-relaxed max-w-xl mx-auto">
-                    {activeLangData.text}
-                  </p>
-                  <p className="font-sans font-light text-xs text-indigo-200/80 max-w-xl mx-auto leading-relaxed">
-                    {activeLangData.subText}
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* Integrated Interactive Newsletter Form */}
-          <div className="mt-8 max-w-xl mx-auto w-full" id="integrated-newsletter-form">
-            <AnimatePresence mode="wait">
-              {status === 'success' ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="flex flex-col items-center space-y-3 py-4 text-emerald-400 font-mono text-xs tracking-wider"
-                >
-                  <CheckCircle size={32} className="animate-bounce" />
-                  <span>{activeLangData.successMessage}</span>
-                </motion.div>
-              ) : (
-                <motion.form
-                  onSubmit={handleSubscriptionSubmit}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="flex flex-col sm:flex-row gap-2.5 w-full justify-center"
-                >
-                  <div className="relative flex-1">
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                        if (status === 'error') setStatus('idle');
-                      }}
-                      placeholder={activeLangData.placeholder}
-                      className="w-full bg-white/5 border border-white/15 px-5 py-3.5 text-base sm:text-sm text-white placeholder-white/30 focus:outline-none focus:border-white/40 focus:bg-white/10 transition-all rounded-none font-mono"
-                      disabled={status === 'loading'}
-                      required
-                    />
-                    <Mail size={15} className="absolute right-5 top-1/2 -translate-y-1/2 text-white/20" />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="px-8 py-3.5 bg-white text-slate-950 hover:bg-slate-100 text-[12px] font-mono font-bold tracking-[0.2em] transition-all rounded-none uppercase flex items-center justify-center space-x-2 shrink-0 disabled:opacity-55 active:scale-[0.98]"
-                    disabled={status === 'loading'}
-                  >
-                    {status === 'loading' ? (
-                      <Loader2 size={13} className="animate-spin text-slate-950" />
-                    ) : (
-                      <span>{activeLangData.buttonText}</span>
-                    )}
-                  </button>
-                </motion.form>
-              )}
-            </AnimatePresence>
-
-            {/* Error Message */}
-            <AnimatePresence>
-              {status === 'error' && (
-                <motion.p
-                  initial={{ opacity: 0, y: -5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  className="text-[10px] text-red-400 font-mono text-center mt-3 tracking-wide"
-                >
-                  {errorMessage || activeLangData.errorMessage}
-                </motion.p>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* Social and Contact details */}
-          <AnimatePresence mode="wait">
-            {!isTransitioning && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="mt-10 pt-8 border-t border-white/5 text-center flex flex-col items-center justify-center space-y-4"
-              >
-                <div className="space-y-2">
-                  <p className="text-[11px] font-mono tracking-[0.15em] text-slate-400 uppercase leading-relaxed max-w-lg">
-                    {activeLangData.socialPrompt}
-                  </p>
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 pt-1">
+                  <div className="space-y-1.5 pt-1 text-left w-full">
+                    <p className="text-[11px] font-mono tracking-[0.15em] text-slate-400 uppercase text-left">
+                      {activeLangData.contactPrompt}
+                    </p>
                     <a
-                      href="https://www.instagram.com/luistamani.visionart"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group flex items-center space-x-1.5 text-xs font-mono text-white/75 hover:text-white transition-colors duration-300"
+                      href={`mailto:${activeLangData.email}`}
+                      className="text-xs sm:text-sm font-mono text-indigo-300 hover:text-indigo-200 transition-all duration-300 underline decoration-indigo-500/30 hover:decoration-indigo-400"
                     >
-                      <span className="text-indigo-400 text-[10px]">Instagram:</span>
-                      <span className="underline decoration-indigo-500/20 group-hover:decoration-indigo-400 transition-colors">{activeLangData.instagram}</span>
-                    </a>
-                    <a
-                      href="https://www.facebook.com/LuisTamani"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group flex items-center space-x-1.5 text-xs font-mono text-white/75 hover:text-white transition-colors duration-300"
-                    >
-                      <span className="text-indigo-400 text-[10px]">Facebook:</span>
-                      <span className="underline decoration-indigo-500/20 group-hover:decoration-indigo-400 transition-colors">{activeLangData.facebook}</span>
+                      {activeLangData.email}
                     </a>
                   </div>
-                </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        </div>
 
-                <div className="space-y-1.5 pt-2">
-                  <p className="text-[11px] font-mono tracking-[0.15em] text-slate-400 uppercase">
-                    {activeLangData.contactPrompt}
-                  </p>
-                  <a
-                    href={`mailto:${activeLangData.email}`}
-                    className="text-xs sm:text-sm font-mono text-indigo-300 hover:text-indigo-200 transition-all duration-300 underline decoration-indigo-500/30 hover:decoration-indigo-400"
-                  >
-                    {activeLangData.email}
-                  </a>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Interactive slide controllers / Language Selectors */}
-          <div className="flex flex-col sm:flex-row items-center justify-center mt-12 gap-6">
-            {/* Dynamic Language Selector Tabs instead of dots */}
-            <div className="flex space-x-6" id="language-switcher-tabs">
-              {slides.map((slide, idx) => (
+        {/* Bottom Row: The Language Buttons in a beautiful, styled, border-framed rectangle at the bottom center */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 0.3 }}
+          className="w-full flex justify-center mt-6 z-40"
+          id="hero-bottom-languages-container"
+        >
+          {/* Beautifully styled custom container for language selection, matching the user's sketch */}
+          <div className="bg-slate-950/85 backdrop-blur-md border border-white/10 px-6 py-3.5 flex items-center justify-center space-x-6 shadow-2xl transition-all duration-300 hover:border-white/20 min-w-[280px]">
+            {slides.map((slide, idx) => (
+              <React.Fragment key={slide.id}>
+                {idx > 0 && <span className="text-white/10 select-none font-light">|</span>}
                 <button
-                  key={slide.id}
                   onClick={() => goToSlide(idx)}
-                  className={`text-[11px] font-mono tracking-[0.25em] pb-1 border-b-2 transition-all duration-300 uppercase ${idx === activeSlide
-                      ? 'text-white border-indigo-400 font-bold'
-                      : 'text-white/35 border-transparent hover:text-white/70'
+                  className={`text-[11px] font-mono tracking-[0.25em] transition-all duration-300 uppercase relative py-1 ${idx === activeSlide
+                      ? 'text-white font-bold'
+                      : 'text-white/40 hover:text-white/80'
                     }`}
                   aria-label={`Switch to ${slide.lang.toUpperCase()}`}
                   disabled={isTransitioning}
                 >
                   {slide.lang === 'fr' ? 'FRANÇAIS' : slide.lang === 'en' ? 'ENGLISH' : 'CASTELLANO'}
+
+                  {idx === activeSlide && (
+                    <motion.div
+                      layoutId="activeLangIndicator"
+                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-indigo-400"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
                 </button>
-              ))}
-            </div>
+              </React.Fragment>
+            ))}
           </div>
         </motion.div>
       </div>

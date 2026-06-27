@@ -104,13 +104,6 @@ export default function App() {
 
             {/* Core sections */}
             <Hero />
-            <Gallery />
-            <Philosophy />
-            <Newsletter />
-            <ContactForm />
-
-            {/* Footer */}
-            <Footer onOpenAdmin={() => setIsAdminOpen(true)} />
 
             {/* Hidden Floating Local Database Inspector Overlay */}
             <AnimatePresence>

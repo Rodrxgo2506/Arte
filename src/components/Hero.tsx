@@ -15,7 +15,10 @@ import {
   ChevronRight,
   Mail,
   Loader2,
-  CheckCircle
+  CheckCircle,
+  Instagram,
+  Facebook,
+  Send
 } from 'lucide-react';
 
 export default function Hero() {
@@ -54,7 +57,7 @@ export default function Hero() {
       socialPrompt: "Vous pouvez suivre les coulisses de l'atelier et les détails des créations à venir sur :",
       instagram: "@luistamani.visionart",
       facebook: "Luis Tamani",
-      contactPrompt: "Pour toute demande particulière, vous pouvez nous écrire à :",
+      contactPrompt: "Informations :",
       email: "luistamani.atelier@gmail.com"
     },
     {
@@ -71,7 +74,7 @@ export default function Hero() {
       socialPrompt: "Follow the life of the atelier and discover details of the upcoming creations on:",
       instagram: "@luistamani.visionart",
       facebook: "Luis Tamani",
-      contactPrompt: "For any inquiries, please contact us at:",
+      contactPrompt: "Information:",
       email: "luistamani.atelier@gmail.com"
     },
     {
@@ -88,7 +91,7 @@ export default function Hero() {
       socialPrompt: "Puedes seguir el detrás de escena del taller y descubrir los detalles de las próximas creaciones en:",
       instagram: "@luistamani.visionart",
       facebook: "Luis Tamani",
-      contactPrompt: "Para cualquier consulta, puedes escribirnos a:",
+      contactPrompt: "Información en:",
       email: "luistamani.atelier@gmail.com"
     }
   ];
@@ -377,14 +380,14 @@ export default function Hero() {
       <div className="relative z-30 max-w-7xl w-full mx-auto flex flex-col justify-between items-center px-6 md:px-12 lg:px-16 min-h-[90vh] pt-28 pb-2">
 
         {/* Main Content Grid: Left Text Column and Right Interactive Column */}
-        <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16 items-end my-auto pb-6">
+        <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16 items-center my-auto pb-6 md:-translate-y-14">
 
           {/* Left Column: Visionary Artist bio and descriptions */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.2, delay: 0.1 }}
-            className="col-span-1 md:col-span-5 text-left flex flex-col justify-end"
+            className="col-span-1 md:col-span-5 text-left flex flex-col justify-center"
             id="hero-left-column"
           >
             <div className="min-h-[220px] md:min-h-[190px] flex flex-col justify-center text-left items-start w-full">
@@ -421,23 +424,13 @@ export default function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -12 }}
                     transition={{ duration: 0.5, ease: "easeInOut" }}
-                    className="w-full flex flex-col space-y-4 text-left items-start"
+                    className="w-full flex flex-col space-y-6 text-left items-start"
                   >
-                    {/* Tagline showing slide details */}
-                    <span className="text-[10px] font-mono tracking-[0.25em] text-indigo-300 uppercase block text-left">
-                      {activeLangData.tagline}
-                    </span>
-
-                    {/* Title */}
-                    <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-white tracking-[0.1em] uppercase text-left">
-                      {activeLangData.title}
-                    </h1>
-
-                    {/* Elegant dynamic descriptions */}
-                    <p className="font-serif font-light text-sm md:text-base text-slate-100 leading-relaxed max-w-xl text-left">
+                    {/* Elegant dynamic descriptions - both paragraphs uniform, larger and using font-mono */}
+                    <p className="font-mono font-light text-base sm:text-lg md:text-[19px] text-slate-100 leading-relaxed max-w-xl text-left">
                       {activeLangData.text}
                     </p>
-                    <p className="font-sans font-light text-xs text-indigo-200/80 max-w-xl leading-relaxed text-left">
+                    <p className="font-mono font-light text-base sm:text-lg md:text-[19px] text-slate-200/90 leading-relaxed max-w-xl text-left">
                       {activeLangData.subText}
                     </p>
                   </motion.div>
@@ -454,11 +447,11 @@ export default function Hero() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.2, delay: 0.1 }}
-            className="col-span-1 md:col-span-5 text-left flex flex-col justify-end"
+            className="col-span-1 md:col-span-5 text-left flex flex-col justify-center"
             id="hero-right-column"
           >
             {/* Integrated Interactive Newsletter Form */}
-            <div className="max-w-xl w-full text-left flex flex-col items-start" id="integrated-newsletter-form">
+            <div className="max-w-2xl w-full text-left flex flex-col items-start" id="integrated-newsletter-form">
               <AnimatePresence mode="wait">
                 {status === 'success' ? (
                   <motion.div
@@ -476,9 +469,9 @@ export default function Hero() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="flex flex-col sm:flex-row gap-2.5 w-full justify-start items-stretch"
+                    className="relative flex items-stretch w-full max-w-xl"
                   >
-                    <div className="relative flex-1">
+                    <div className="relative flex-1 w-full">
                       <input
                         type="email"
                         value={email}
@@ -487,24 +480,25 @@ export default function Hero() {
                           if (status === 'error') setStatus('idle');
                         }}
                         placeholder={activeLangData.placeholder}
-                        className="w-full bg-white/5 border border-white/15 px-5 py-3.5 text-base sm:text-sm text-white placeholder-white/30 focus:outline-none focus:border-white/40 focus:bg-white/10 transition-all rounded-none font-mono"
+                        className="w-full bg-white/5 border border-white/15 pl-12 pr-16 py-4.5 text-base sm:text-lg text-white placeholder-white/30 focus:outline-none focus:border-white/40 focus:bg-white/10 transition-all rounded-none font-mono"
                         disabled={status === 'loading'}
                         required
                       />
-                      <Mail size={15} className="absolute right-5 top-1/2 -translate-y-1/2 text-white/20" />
-                    </div>
+                      <Mail size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
 
-                    <button
-                      type="submit"
-                      className="px-8 py-3.5 bg-white text-slate-950 hover:bg-slate-100 text-[12px] font-mono font-bold tracking-[0.2em] transition-all rounded-none uppercase flex items-center justify-center space-x-2 shrink-0 disabled:opacity-55 active:scale-[0.98]"
-                      disabled={status === 'loading'}
-                    >
-                      {status === 'loading' ? (
-                        <Loader2 size={13} className="animate-spin text-slate-950" />
-                      ) : (
-                        <span>{activeLangData.buttonText}</span>
-                      )}
-                    </button>
+                      <button
+                        type="submit"
+                        className="absolute right-0 top-0 bottom-0 px-6 bg-white text-slate-950 hover:bg-slate-100 transition-all duration-300 rounded-none flex items-center justify-center shrink-0 disabled:opacity-55 active:scale-[0.95]"
+                        disabled={status === 'loading'}
+                        title={activeLangData.buttonText}
+                      >
+                        {status === 'loading' ? (
+                          <Loader2 size={18} className="animate-spin text-slate-950" />
+                        ) : (
+                          <Send size={18} className="text-slate-950 transition-transform duration-300 hover:translate-x-0.5" />
+                        )}
+                      </button>
+                    </div>
                   </motion.form>
                 )}
               </AnimatePresence>
@@ -516,7 +510,7 @@ export default function Hero() {
                     initial={{ opacity: 0, y: -5 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="text-[10px] text-red-400 font-mono text-left mt-3 tracking-wide"
+                    className="text-[11px] text-red-400 font-mono text-left mt-3 tracking-wide"
                   >
                     {errorMessage || activeLangData.errorMessage}
                   </motion.p>
@@ -532,41 +526,41 @@ export default function Hero() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.5, delay: 0.1 }}
-                  className="mt-8 pt-6 border-t border-white/5 text-left flex flex-col items-start justify-start space-y-4 w-full"
+                  className="mt-8 pt-6 border-t border-white/5 text-left flex flex-col items-start justify-start space-y-5 w-full"
                 >
                   <div className="space-y-2 text-left w-full">
-                    <p className="text-[11px] font-mono tracking-[0.15em] text-slate-400 uppercase leading-relaxed max-w-lg text-left">
+                    <p className="text-sm sm:text-base font-mono tracking-[0.15em] text-slate-400 uppercase leading-relaxed max-w-lg text-left">
                       {activeLangData.socialPrompt}
                     </p>
-                    <div className="flex flex-col sm:flex-row items-start justify-start gap-2 sm:gap-6 pt-1">
+                    <div className="flex items-center gap-4 pt-1">
                       <a
                         href="https://www.instagram.com/luistamani.visionart"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex items-center space-x-1.5 text-xs font-mono text-white/75 hover:text-white transition-colors duration-300"
+                        className="p-3 bg-white/5 border border-white/10 hover:border-indigo-400 hover:bg-white/10 text-white hover:text-indigo-400 transition-all duration-300 flex items-center justify-center shadow-lg"
+                        title="Instagram"
                       >
-                        <span className="text-indigo-400 text-[10px]">Instagram:</span>
-                        <span className="underline decoration-indigo-500/20 group-hover:decoration-indigo-400 transition-colors">{activeLangData.instagram}</span>
+                        <Instagram size={20} />
                       </a>
                       <a
                         href="https://www.facebook.com/LuisTamani"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex items-center space-x-1.5 text-xs font-mono text-white/75 hover:text-white transition-colors duration-300"
+                        className="p-3 bg-white/5 border border-white/10 hover:border-indigo-400 hover:bg-white/10 text-white hover:text-indigo-400 transition-all duration-300 flex items-center justify-center shadow-lg"
+                        title="Facebook"
                       >
-                        <span className="text-indigo-400 text-[10px]">Facebook:</span>
-                        <span className="underline decoration-indigo-500/20 group-hover:decoration-indigo-400 transition-colors">{activeLangData.facebook}</span>
+                        <Facebook size={20} />
                       </a>
                     </div>
                   </div>
 
                   <div className="space-y-1.5 pt-1 text-left w-full">
-                    <p className="text-[11px] font-mono tracking-[0.15em] text-slate-400 uppercase text-left">
+                    <p className="text-sm sm:text-base font-mono tracking-[0.15em] text-slate-400 uppercase text-left">
                       {activeLangData.contactPrompt}
                     </p>
                     <a
                       href={`mailto:${activeLangData.email}`}
-                      className="text-xs sm:text-sm font-mono text-indigo-300 hover:text-indigo-200 transition-all duration-300 underline decoration-indigo-500/30 hover:decoration-indigo-400"
+                      className="text-base sm:text-lg font-mono text-indigo-300 hover:text-indigo-200 transition-all duration-300 underline decoration-indigo-500/30 hover:decoration-indigo-400"
                     >
                       {activeLangData.email}
                     </a>
